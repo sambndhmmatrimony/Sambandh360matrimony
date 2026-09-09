@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sambandh360 Matrimony</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f1f5;
+      margin: 0;
+      padding: 20px;
+    }
 
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px #0002;
+    }
+
+    h1 {
+      text-align: center;
+      color: #8e246b;
+    }
+
+    input, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #8e246b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>💍 Sambandh360 Matrimony</h1>
+
+    <h2>Register</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="अपना Email डालें"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="अपना Password डालें"
+    >
+
+    <button onclick="register()">Register</button>
+
+    <div id="message"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
