@@ -29,23 +29,7 @@ async function register() {
 }
 
 async function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const message = document.getElementById("message");
-
-  const { error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if (error) {
-    message.innerText = error.message;
-  } else {
-    message.innerText = "Login सफल हो गया! ✅";
-  }
-}
-async function login() {
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const message = document.getElementById("message");
 
@@ -62,6 +46,6 @@ async function login() {
   if (error) {
     message.innerText = "Login असफल: " + error.message;
   } else {
-    message.innerText = "Login सफल!";
+    message.innerText = "Login सफल हो गया! ✅";
   }
 }
