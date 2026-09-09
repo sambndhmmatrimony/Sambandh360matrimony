@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>पूरी प्रोफाइल - Sambandh360</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#160d14;
+  color:white;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:600px;
+  margin:30px auto;
+  background:#211d1f;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 0 20px #8e2468;
+}
+
+h1{
+  color:#ff8ee8;
+  text-align:center;
+}
+
+.profile{
+  font-size:20px;
+  line-height:1.8;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:20px;
+  border:0;
+  border-radius:10px;
+  background:#9b176d;
+  color:white;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>💍 Sambandh360<br>पूरी प्रोफाइल</h1>
+
+  <div id="profile" class="profile">
+    प्रोफाइल लोड हो रही है...
+  </div>
+
+  <button onclick="history.back()">⬅️ वापस जाएँ</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function loadProfile(){
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if(!id){
+    document.getElementById("profile").innerHTML =
+      "❌ प्रोफाइल ID नहीं मिली।";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if(error){
+    document.getElementById("profile").innerHTML =
+      "❌ प्रोफाइल लोड नहीं हो सकी।";
+    console.log(error);
+    return;
+  }
+
+  document.getElementById("profile").innerHTML = `
+    <h2 style="color:#ff8ee8">${data.name || "नाम उपलब्ध नहीं"}</h2>
+    <p>🎂 उम्र: ${data.age || "-"}</p>
+    <p>👤 लिंग: ${data.gender || "-"}</p>
+    <p>📍 शहर: ${data.city || "-"}</p>
+    <p>🏠 राज्य: ${data.state || "-"}</p>
+    <p>💼 व्यवसाय: ${data.occupation || "-"}</p>
+    <p>📄 परिचय: ${data.bio || "-"}</p>
+  `;
+}
+
+loadProfile();
+</script>
+
+</body>
+</html>
