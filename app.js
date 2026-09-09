@@ -46,6 +46,7 @@ async function login() {
   if (error) {
     message.innerText = "Login असफल: " + error.message;
   } else {
-    message.innerText = "Login सफल हो गया! ✅";
-  }
+  message.innerText = "Login सफल हो गया! ✅";
+  window.location.href = "profile.html";
+}
 }
