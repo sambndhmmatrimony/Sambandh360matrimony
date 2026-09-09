@@ -122,7 +122,9 @@ function showProfiles(list) {
         <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
 
         <p>📄 परिचय: ${profile.bio || "-"}</p>
-      </div>
+      <button onclick="location.href='view-profile.html?id=${profile.id}'">
+💖 पूरी प्रोफाइल देखें
+</button></div>
     `;
   });
 }
