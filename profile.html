@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sambandh360 Matrimony - Profile</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f1f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px #0002;
+    }
+
+    h1 {
+      text-align: center;
+      color: #92256d;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0 15px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #92256d;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    button:active {
+      opacity: 0.8;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 17px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>💍 Sambandh360 Matrimony</h1>
+
+    <h2>अपनी Profile बनाएं</h2>
+
+    <input type="text" id="name" placeholder="पूरा नाम">
+
+    <input type="number" id="age" placeholder="उम्र">
+
+    <select id="gender">
+      <option value="">Gender चुनें</option>
+      <option value="Male">पुरुष</option>
+      <option value="Female">महिला</option>
+    </select>
+
+    <input type="text" id="city" placeholder="शहर">
+
+    <input type="text" id="education" placeholder="शिक्षा">
+
+    <input type="text" id="occupation" placeholder="व्यवसाय">
+
+    <textarea id="about" rows="4" placeholder="अपने बारे में लिखें"></textarea>
+
+    <button onclick="saveProfile()">Profile Save करें</button>
+
+    <div id="message"></div>
+
+  </div>
+
+  <script>
+    function saveProfile() {
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const gender = document.getElementById("gender").value;
+      const city = document.getElementById("city").value;
+      const education = document.getElementById("education").value;
+      const occupation = document.getElementById("occupation").value;
+      const about = document.getElementById("about").value;
+      const message = document.getElementById("message");
+
+      if (!name || !age || !gender || !city) {
+        message.innerText = "कृपया जरूरी जानकारी भरें।";
+        return;
+      }
+
+      message.innerText = "Profile तैयार है! ✅";
+    }
+  </script>
+
+</body>
+</html>
