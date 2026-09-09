@@ -98,37 +98,61 @@
       return;
     }
 
-    if (!data || data.length === 0) {
-      box.innerHTML =
-        "<p class='loading'>अभी कोई Profile नहीं है।</p>";
-      return;
-    }
+function showProfiles(list) {
+  box.innerHTML = "";
 
-    box.innerHTML = "";
+  if (!list || list.length === 0) {
+    box.innerHTML = "<p class='loading'>अभी कोई Profile नहीं मिली।</p>";
+    return;
+  }
 
-    data.forEach(profile => {
+  list.forEach(profile => {
+    box.innerHTML += `
+      <div class="profile">
+        <h2>${profile.name || "नाम उपलब्ध नहीं"}</h2>
 
-      box.innerHTML += `
-        <div class="profile">
+        <p>🎂 उम्र: ${profile.age || "-"}</p>
 
-          <h2>${profile.name || "नाम उपलब्ध नहीं"}</h2>
+        <p>👤 लिंग: ${profile.gender || "-"}</p>
 
-          <p>🎂 उम्र: ${profile.age || "-"}</p>
+        <p>📍 शहर: ${profile.city || "-"}</p>
 
-          <p>👤 लिंग: ${profile.gender || "-"}</p>
+        <p>🏠 राज्य: ${profile.state || "-"}</p>
 
-          <p>📍 शहर: ${profile.city || "-"}</p>
+        <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
 
-          <p>🏠 राज्य: ${profile.state || "-"}</p>
+        <p>📄 परिचय: ${profile.bio || "-"}</p>
+      </div>
+    `;
+  });
+}
 
-          <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
+function filterProfiles() {
+  const search = document.getElementById("search").value.toLowerCase();
+  const gender = document.getElementById("genderFilter").value.toLowerCase();
+  const city = document.getElementById("cityFilter").value.toLowerCase();
 
-          <p>📝 परिचय: ${profile.bio || "-"}</p>
+  const filtered = data.filter(profile => {
+    const name = (profile.name || "").toLowerCase();
+    const profileCity = (profile.city || "").toLowerCase();
+    const profileGender = (profile.gender || "").toLowerCase();
 
-        </div>
-      `;
+    return (
+      (name.includes(search) || profileCity.includes(search)) &&
+      profileCity.includes(city) &&
+      (gender === "" || profileGender === gender)
+    );
+  });
 
-    });
+  showProfiles(filtered);
+}
+
+showProfiles(data);
+
+document.getElementById("search").addEventListener("input", filterProfiles);
+document.getElementById("genderFilter").addEventListener("change", filterProfiles);
+document.getElementById("cityFilter").addEventListener("input", filterProfiles);
+    
   }
 
   loadProfiles();
