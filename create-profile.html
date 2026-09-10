@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile - Sambandh360</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f1f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px #0002;
+    }
+
+    h1 {
+      text-align: center;
+      color: #8e246b;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #8e246b;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    #preview {
+      display: none;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 15px auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>💍 Sambandh360</h1>
+  <h2>अपनी Profile बनाएँ</h2>
+
+  <input
+    type="text"
+    id="name"
+    placeholder="पूरा नाम"
+  >
+
+  <input
+    type="number"
+    id="age"
+    placeholder="उम्र"
+  >
+
+  <select id="gender">
+    <option value="">Gender चुनें</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+
+  <input
+    type="text"
+    id="city"
+    placeholder="शहर"
+  >
+
+  <input
+    type="text"
+    id="state"
+    placeholder
