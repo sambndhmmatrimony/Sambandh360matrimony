@@ -95,6 +95,7 @@ async function loadProfile(){
 
   document.getElementById("profile").innerHTML = `
     <h2 style="color:#ff8ee8">${data.name || "नाम उपलब्ध नहीं"}</h2>
+    ${data.photo_url ? `<img src="${data.photo_url}" style="width:180px;height:180px;object-fit:cover;border-radius:50%;display:block;margin:15px auto;">` : ""}
     <p>🎂 उम्र: ${data.age || "-"}</p>
     <p>👤 लिंग: ${data.gender || "-"}</p>
     <p>📍 शहर: ${data.city || "-"}</p>
