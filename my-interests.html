@@ -126,7 +126,19 @@ async function loadInterests() {
     <p class="status">${type}</p>
     <p>📌 Status: ${item.status}</p>
     <p>📅 ${new Date(item.created_at).toLocaleString()}</p>
-
+  ${
+  item.status === "accepted"
+    ? `
+      <button onclick="location.href='view-profile.html?id=${
+        item.sender_id === user.id
+          ? item.receiver_id
+          : item.sender_id
+      }'">
+        👤 Profile देखें
+      </button>
+    `
+    : ""
+}
     ${
       item.receiver_id === user.id && item.status === "pending"
         ? `
