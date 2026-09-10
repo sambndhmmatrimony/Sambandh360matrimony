@@ -84,7 +84,7 @@
     SUPABASE_KEY
   );
 
-  async function logout() {
+  document.getElementById("logoutBtn").onclick = async function () {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
@@ -93,8 +93,7 @@
   }
 
   window.location.href = "index.html";
-}
-document.getElementById("logoutBtn").addEventListener("click", logout);
+};
 
     const { data, error } = await supabase
       .from("profiles")
