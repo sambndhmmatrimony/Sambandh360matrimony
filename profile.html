@@ -95,8 +95,6 @@
   window.location.href = "index.html";
 }
 window.logout = logout;
-document.querySelector("button[onclick='logout()']")
-  .addEventListener("click", logout);
 
     const { data, error } = await supabase
       .from("profiles")
