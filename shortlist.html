@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shortlist - Sambandh360 Matrimony</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      margin: auto;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #e91e63;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .back {
+      background: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>❤️ My Shortlist</h1>
+
+  <button class="btn back" onclick="location.href='profile.html'">
+    ⬅️ वापस Profile पर जाएँ
+  </button>
+
+  <div id="shortlistContainer">
+    Loading...
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    async function loadShortlists() {
+
+      const {
+        data: { user }
+      } = await supabaseClient.auth.getUser();
+
+      if (!user) {
+        document.getElementById("shortlistContainer").innerHTML =
+          "<p>❌ पहले Login करें</p>";
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from("shortlists")
+        .select(`
+          id,
+          profile_id,
+          profiles (
+            id,
+            name,
+            full_name,
+            age,
+            gender,
+            city,
+            state,
+            occupation,
+            bio,
+            photo_url
+          )
+        `)
+        .eq("user_id", user.id)
+        .order("id", { ascending: false });
+
+      if (error) {
+        document.getElementById("shortlistContainer").innerHTML =
+          "<p>❌ Error: " + error.message + "</p>";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        document.getElementById("shortlistContainer").innerHTML =
+          "<p>❤️ अभी कोई Profile Shortlist नहीं है।</p>";
+        return;
+      }
+
+      let html = "";
+
+      data.forEach(item => {
+
+        const p = item.profiles;
+
+        if (!p) return;
+
+        const name = p.full_name || p.name || "नाम नहीं दिया गया";
+
+        html += `
+          <div class="card">
+
+            ${
+              p.photo_url
+              ? `<img src="${p.photo_url}" alt="Profile Photo">`
+              : `<div style="text-align:center;padding:60px 10px;">
+                   📷 Photo नहीं है
+                 </div>`
+            }
+
+            <h2>${name}</h2>
+
+            <p>🎂 उम्र: ${p.age || "—"}</p>
+            <p>⚧️ Gender: ${p.gender || "—"}</p>
+            <p>📍 शहर: ${p.city || "—"}</p>
+            <p>🏠 राज्य: ${p.state || "—"}</p>
+            <p>💼 काम: ${p.occupation || "—"}</p>
+            <p>📝 ${p.bio || "Bio उपलब्ध नहीं है"}</p>
+
+            <button class="btn"
+              onclick="location.href='view-profile.html?id=${p.id}'">
+              💖 पूरी Profile देखें
+            </button>
+
+          </div>
+        `;
+      });
+
+      document.getElementById("shortlistContainer").innerHTML = html;
+    }
+
+    loadShortlists();
+  </script>
+
+</body>
+</html>
