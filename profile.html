@@ -124,9 +124,13 @@ ${profile.photo_url ? `<img src="${profile.photo_url}" style="width:150px;height
         <p>📄 परिचय: ${profile.bio || "-"}</p>
       <button onclick="location.href='view-profile.html?id=${profile.id}'">
 💖 पूरी प्रोफाइल देखें
-</button><button onclick="location.href='edit-profile.html'">
+</button>
+${user && profile.id === user.id ? `
+<button onclick="location.href='edit-profile.html'">
 ✏️ Edit Profile
-</button></div>
+</button>
+` : ""}
+</div>
     `;
   });
 }
