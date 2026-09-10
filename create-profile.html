@@ -279,7 +279,7 @@ async function saveProfile(){
   const { error } =
     await supabase
     .from("profiles")
-    .insert({
+    .upsert({
 
     id: user.id,
 
@@ -298,6 +298,8 @@ async function saveProfile(){
       bio: bio,
 
       photo_url: photoUrl
+}, {
+  onConflict: "id"
 
     });
 
