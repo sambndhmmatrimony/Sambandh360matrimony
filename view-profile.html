@@ -134,7 +134,13 @@ async function sendInterest(receiverId) {
       sender_id: user.id,
       receiver_id: receiverId
     });
-
+    await supabaseClient
+      .from("notifications")
+      .insert({
+        user_id: receiverId,
+        type: "interest",
+        message: "💗 आपको नया Interest मिला है!"
+      });
   if (error) {
     alert("Interest नहीं भेजा गया: " + error.message);
     return;
