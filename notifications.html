@@ -118,21 +118,48 @@ async function loadNotifications(){
       item.is_read ? "notification" : "notification unread";
 
     div.innerHTML = `
-      <h3>🔔 Notification</h3>
+  <h3>🔔 Notification</h3>
 
-      <p>${item.message}</p>
+  <p>${item.message}</p>
 
-      <small>
-        ${new Date(item.created_at).toLocaleString()}
-      </small>
-    `;
+  <small>
+    ${new Date(item.created_at).toLocaleString()}
+  </small>
+
+  ${
+    !item.is_read
+      ? `
+        <br><br>
+        <button onclick="markAsRead('${item.id}')">
+          ✅ पढ़ लिया
+        </button>
+      `
+      : `
+        <br><br>
+        <span>✅ पढ़ा हुआ</span>
+      `
+  }
+`;
 
     box.appendChild(div);
 
   });
 
 }
+async function markAsRead(id) {
 
+  const { error } = await supabaseClient
+    .from("notifications")
+    .update({ is_read: true })
+    .eq("id", id);
+
+  if (error) {
+    alert("❌ Read नहीं हुआ: " + error.message);
+    return;
+  }
+
+  loadNotifications();
+}
 loadNotifications();
 
 </script>
