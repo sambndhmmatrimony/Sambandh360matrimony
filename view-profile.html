@@ -84,7 +84,7 @@ async function loadProfile(){
     .from("profiles")
     .select("*")
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if(error){
     document.getElementById("profile").innerHTML =
