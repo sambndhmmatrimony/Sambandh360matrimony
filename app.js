@@ -50,3 +50,22 @@ async function login() {
   window.location.href = "profile.html";
 }
 }
+async function forgotPassword() {
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    alert("पहले अपना Email डालें");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + "/reset-password.html"
+  });
+
+  if (error) {
+    alert("Password reset नहीं हुआ: " + error.message);
+    return;
+  }
+
+  alert("Password reset link आपके Email पर भेज दिया गया है।");
+}
