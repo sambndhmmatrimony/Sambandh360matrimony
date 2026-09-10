@@ -94,7 +94,7 @@
 
   window.location.href = "index.html";
 };
-
+async function loadProfiles() {
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
