@@ -97,11 +97,27 @@ const {
   data: { user }
 } = await supabaseClient.auth.getUser();
 
-let chatButton = "";
+document.getElementById("profile").innerHTML = `
+  <h2 style="color:#ff8ee8">${data.name || "नाम उपलब्ध नहीं"}</h2>
+
+  ${data.photo_url ? `<img src="${data.photo_url}" style="width:180px;height:180px;object-fit:cover;border-radius:50%;display:block;margin:15px auto;">` : ""}
+
+  <p>🎂 उम्र: ${data.age || "-"}</p>
+  <p>👤 लिंग: ${data.gender || "-"}</p>
+  <p>📍 शहर: ${data.city || "-"}</p>
+  <p>🏠 राज्य: ${data.state || "-"}</p>
+  <p>💼 व्यवसाय: ${data.occupation || "-"}</p>
+  <p>📄 परिचय: ${data.bio || "-"}</p>
+
+  <button onclick="sendInterest('${data.id}')"
+  style="margin-top:20px;padding:15px;width:100%;background:#a00068;color:white;border:none;border-radius:10px;font-size:18px;">
+  ❤️ Interest भेजें
+  </button>
+`;
 
 if (user && user.id !== data.id) {
 
-  let { data: interest } = await supabaseClient
+  const { data: interest } = await supabaseClient
     .from("interests")
     .select("id")
     .eq("sender_id", user.id)
@@ -109,20 +125,8 @@ if (user && user.id !== data.id) {
     .eq("status", "accepted")
     .maybeSingle();
 
-  if (!interest) {
-    const result = await supabaseClient
-      .from("interests")
-      .select("id")
-      .eq("sender_id", data.id)
-      .eq("receiver_id", user.id)
-      .eq("status", "accepted")
-      .maybeSingle();
-
-    interest = result.data;
-  }
-
   if (interest) {
-    chatButton = `
+    document.getElementById("profile").innerHTML += `
       <button onclick="location.href='chat.html?user=${data.id}'"
       style="margin-top:20px;padding:15px;width:100%;background:#0a8f5b;color:white;border:none;border-radius:10px;font-size:18px;">
       💬 Chat करें
