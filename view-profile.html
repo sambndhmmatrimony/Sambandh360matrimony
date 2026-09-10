@@ -101,13 +101,25 @@ let chatButton = "";
 
 if (user && user.id !== data.id) {
 
-  const { data: interest } = await supabaseClient
+  let { data: interest } = await supabaseClient
     .from("interests")
     .select("id")
-    .or(
-      `and(sender_id.eq.${user.id},receiver_id.eq.${data.id},status.eq.accepted),and(sender_id.eq.${data.id},receiver_id.eq.${user.id},status.eq.accepted)`
-    )
+    .eq("sender_id", user.id)
+    .eq("receiver_id", data.id)
+    .eq("status", "accepted")
     .maybeSingle();
+
+  if (!interest) {
+    const result = await supabaseClient
+      .from("interests")
+      .select("id")
+      .eq("sender_id", data.id)
+      .eq("receiver_id", user.id)
+      .eq("status", "accepted")
+      .maybeSingle();
+
+    interest = result.data;
+  }
 
   if (interest) {
     chatButton = `
