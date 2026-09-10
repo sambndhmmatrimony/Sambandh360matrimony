@@ -3,80 +3,252 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Sambandh360 Matrimony</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f1f5;
-      margin: 0;
-      padding: 20px;
+    * {
+      box-sizing: border-box;
     }
 
-    .container{
-      max-width: 500px;
-      margin: 40px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px #0002;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff0f6, #f7e6f2);
+      color: #333;
+    }
+
+    .hero {
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 55px;
     }
 
     h1 {
+      color: #8e246b;
+      font-size: 34px;
+      margin: 10px 0;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px #0002;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
       text-align: center;
       color: #8e246b;
     }
 
-    input, button {
+    input,
+    button {
       width: 100%;
-      box-sizing: border-box;
-      padding: 13px;
+      padding: 14px;
       margin-top: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      border-radius: 10px;
       font-size: 16px;
     }
 
+    input {
+      border: 1px solid #ddd;
+    }
+
     button {
+      border: none;
       background: #8e246b;
       color: white;
-      border: none;
       cursor: pointer;
     }
 
-    #message {
-      margin-top: 15px;
+    .secondary {
+      background: #555;
+    }
+
+    .outline {
+      background: white;
+      color: #8e246b;
+      border: 2px solid #8e246b;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .feature {
+      background: white;
+      padding: 18px 10px;
       text-align: center;
+      border-radius: 15px;
+      box-shadow: 0 3px 12px #0001;
+    }
+
+    .feature-icon {
+      font-size: 30px;
+    }
+
+    .feature-text {
+      margin-top: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #777;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
 
+  <section class="hero">
+
+    <div class="logo">💍</div>
+
+    <h1>Sambandh360 Matrimony</h1>
+
+    <div class="tagline">
+      आपका सही जीवनसाथी खोजने की आसान शुरुआत ❤️
+      <br>
+      भरोसेमंद • सरल • सुरक्षित
+    </div>
+
+  </section>
+
+
   <div class="container">
-    <h1>💍 Sambandh360 Matrimony</h1>
 
-    <h2>Register</h2>
+    <div class="card">
 
-    <input
-      type="email"
-      id="email"
-      placeholder="अपना Email डालें"
-    >
+      <h2>🔐 Login / Register</h2>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="अपना Password डालें"
-    >
+      <input
+        type="email"
+        id="email"
+        placeholder="अपना Email डालें"
+      >
 
-    <button onclick="register()">Register</button>
-    <button onclick="login()">Login</button>
-    <button onclick="forgotPassword()">🔑 Forgot Password</button>
-    <div id="message"></div>
+      <input
+        type="password"
+        id="password"
+        placeholder="अपना Password डालें"
+      >
+
+      <button onclick="register()">
+        📝 Register करें
+      </button>
+
+      <button onclick="login()">
+        🔑 Login करें
+      </button>
+
+      <button
+        class="secondary"
+        onclick="forgotPassword()">
+        🔄 Forgot Password
+      </button>
+
+      <div id="message"></div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>❤️ Matrimony Features</h2>
+
+      <div class="features">
+
+        <div class="feature">
+          <div class="feature-icon">👤</div>
+          <div class="feature-text">Profiles</div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">💗</div>
+          <div class="feature-text">Interest</div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">❤️</div>
+          <div class="feature-text">Shortlist</div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">💬</div>
+          <div class="feature-text">Chat</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🌸 जल्दी शुरू करें</h2>
+
+      <button
+        class="outline"
+        onclick="location.href='profile.html'">
+        👥 Profiles देखें
+      </button>
+
+      <button
+        class="outline"
+        onclick="location.href='create-profile.html'">
+        ✨ अपना Profile बनाएँ
+      </button>
+
+      <button
+        class="outline"
+        onclick="location.href='shortlist.html'">
+        ❤️ My Shortlist
+      </button>
+
+    </div>
+
   </div>
-  
+
+
+  <footer>
+    © 2026 Sambandh360 Matrimony
+    <br>
+    आपका रिश्ता, हमारी कोशिश ❤️
+  </footer>
+
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script src="app.js"></script>
 
 </body>
