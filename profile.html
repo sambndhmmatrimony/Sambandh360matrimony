@@ -85,11 +85,18 @@
   );
 
   async function logout() {
-  await supabase.auth.signOut();
-  location.href = "index.html";
-}
+  const { error } = await supabase.auth.signOut();
 
+  if (error) {
+    alert("Logout नहीं हुआ: " + error.message);
+    return;
+  }
+
+  window.location.href = "index.html";
+}
 window.logout = logout;
+document.querySelector("button[onclick='logout()']")
+  .addEventListener("click", logout);
 
     const { data, error } = await supabase
       .from("profiles")
