@@ -86,7 +86,7 @@ async function loadProfile(){
     .eq("id", id)
     .maybeSingle();
 
-  if(error){
+  if(error || !data){
     document.getElementById("profile").innerHTML =
       "❌ प्रोफाइल लोड नहीं हो सकी।";
     console.log(error);
