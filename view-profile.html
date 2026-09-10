@@ -117,13 +117,25 @@ document.getElementById("profile").innerHTML = `
 
 if (user && user.id !== data.id) {
 
-  const { data: interest } = await supabaseClient
+  let { data: interest } = await supabaseClient
     .from("interests")
     .select("id")
     .eq("sender_id", user.id)
     .eq("receiver_id", data.id)
     .eq("status", "accepted")
     .maybeSingle();
+
+  if (!interest) {
+    const result = await supabaseClient
+      .from("interests")
+      .select("id")
+      .eq("sender_id", data.id)
+      .eq("receiver_id", user.id)
+      .eq("status", "accepted")
+      .maybeSingle();
+
+    interest = result.data;
+  }
 
   if (interest) {
     document.getElementById("profile").innerHTML += `
@@ -133,7 +145,6 @@ if (user && user.id !== data.id) {
       </button>
     `;
   }
- }
 }
 async function sendInterest(receiverId) {
 
