@@ -1,108 +1,334 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Profile - Sambandh360</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Profile - Sambandh360</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f1f5;
-      margin: 0;
-      padding: 20px;
-    }
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f7f1f5;
+  margin:0;
+  padding:20px;
+}
 
-    .container {
-      max-width: 600px;
-      margin: 20px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px #0002;
-    }
+.container{
+  max-width:600px;
+  margin:20px auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 20px #0002;
+}
 
-    h1 {
-      text-align: center;
-      color: #8e246b;
-    }
+h1{
+  text-align:center;
+  color:#8e246b;
+}
 
-    input, select, textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 13px;
-      margin-top: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
+h2{
+  text-align:center;
+}
 
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
+input,select,textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px;
+  margin-top:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
 
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #8e246b;
-      color: white;
-      font-size: 17px;
-      cursor: pointer;
-    }
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
 
-    #message {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 16px;
-    }
+button{
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  border:0;
+  border-radius:8px;
+  background:#8e246b;
+  color:white;
+  font-size:17px;
+  cursor:pointer;
+}
 
-    #preview {
-      display: none;
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin: 15px auto;
-    }
-  </style>
+button:disabled{
+  opacity:.6;
+}
+
+#message{
+  margin-top:15px;
+  text-align:center;
+  font-size:16px;
+}
+
+.photo-preview{
+  display:block;
+  max-width:180px;
+  max-height:180px;
+  margin:15px auto;
+  border-radius:12px;
+  object-fit:cover;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>💍 Sambandh360</h1>
-  <h2>अपनी Profile बनाएँ</h2>
+<h1>💍 Sambandh360</h1>
+<h2>अपनी Profile बनाएँ</h2>
 
-  <input
-    type="text"
-    id="name"
-    placeholder="पूरा नाम"
-  >
+<input
+  type="text"
+  id="name"
+  placeholder="पूरा नाम"
+>
 
-  <input
-    type="number"
-    id="age"
-    placeholder="उम्र"
-  >
+<input
+  type="number"
+  id="age"
+  placeholder="उम्र"
+  min="18"
+>
 
-  <select id="gender">
-    <option value="">Gender चुनें</option>
-    <option value="Male">Male</option>
-    <option value="Female">Female</option>
-  </select>
+<select id="gender">
+  <option value="">Gender चुनें</option>
+  <option value="Male">Male</option>
+  <option value="Female">Female</option>
+</select>
 
-  <input
-    type="text"
-    id="city"
-    placeholder="शहर"
-  >
+<input
+  type="text"
+  id="city"
+  placeholder="शहर"
+>
 
-  <input
-    type="text"
-    id="state"
-    placeholder
+<input
+  type="text"
+  id="state"
+  placeholder="राज्य"
+>
+
+<input
+  type="text"
+  id="occupation"
+  placeholder="व्यवसाय"
+>
+
+<textarea
+  id="bio"
+  placeholder="अपने बारे में लिखें"
+></textarea>
+
+<label>
+  📷 Profile Photo
+</label>
+
+<input
+  type="file"
+  id="photo"
+  accept="image/*"
+>
+
+<img
+  id="preview"
+  class="photo-preview"
+  style="display:none;"
+>
+
+<button id="saveBtn" onclick="saveProfile()">
+  💾 Save Profile
+</button>
+
+<div id="message"></div>
+
+</div>
+
+<script type="module">
+
+import { createClient } from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+/* अपनी पुरानी Supabase values यहाँ रखें */
+const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* Photo preview */
+document.getElementById("photo").addEventListener("change", function(){
+
+  const file = this.files[0];
+
+  if(!file){
+    return;
+  }
+
+  const preview = document.getElementById("preview");
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+
+});
+
+
+/* Save Profile */
+async function saveProfile(){
+
+  const message = document.getElementById("message");
+  const saveBtn = document.getElementById("saveBtn");
+
+  const name = document.getElementById("name").value.trim();
+  const age = document.getElementById("age").value;
+  const gender = document.getElementById("gender").value;
+  const city = document.getElementById("city").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const occupation = document.getElementById("occupation").value.trim();
+  const bio = document.getElementById("bio").value.trim();
+
+  const photoFile = document.getElementById("photo").files[0];
+
+
+  if(!name || !age || !gender || !city){
+
+    message.innerText =
+      "कृपया नाम, उम्र, Gender और शहर भरें।";
+
+    return;
+  }
+
+
+  saveBtn.disabled = true;
+  message.innerText = "Profile save हो रही है...";
+
+
+  /* Current logged-in user */
+  const { data: userData, error: userError } =
+    await supabase.auth.getUser();
+
+  if(userError || !userData.user){
+
+    message.innerText =
+      "पहले Login करें।";
+
+    saveBtn.disabled = false;
+    return;
+  }
+
+
+  const user = userData.user;
+
+  let photoUrl = null;
+
+
+  /* Upload Photo */
+  if(photoFile){
+
+    const fileExt =
+      photoFile.name.split(".").pop();
+
+    const fileName =
+      user.id + "-" + Date.now() + "." + fileExt;
+
+    const filePath =
+      fileName;
+
+
+    const { error: uploadError } =
+      await supabase.storage
+      .from("profile-photos")
+      .upload(filePath, photoFile, {
+        upsert:true
+      });
+
+
+    if(uploadError){
+
+      message.innerText =
+        "Photo upload नहीं हुई: " +
+        uploadError.message;
+
+      saveBtn.disabled = false;
+      return;
+    }
+
+
+    const { data: publicData } =
+      supabase.storage
+      .from("profile-photos")
+      .getPublicUrl(filePath);
+
+    photoUrl =
+      publicData.publicUrl;
+  }
+
+
+  /* Save profile in database */
+  const { error } =
+    await supabase
+    .from("profiles")
+    .insert({
+
+      user_id: user.id,
+
+      name: name,
+
+      age: Number(age),
+
+      gender: gender,
+
+      city: city,
+
+      state: state,
+
+      occupation: occupation,
+
+      bio: bio,
+
+      photo_url: photoUrl
+
+    });
+
+
+  if(error){
+
+    message.innerText =
+      "Profile save नहीं हुई: " +
+      error.message;
+
+    saveBtn.disabled = false;
+    return;
+  }
+
+
+  message.innerText =
+    "✅ Profile सफलतापूर्वक Save हो गई!";
+
+  saveBtn.disabled = false;
+
+
+  setTimeout(function(){
+
+    window.location.href =
+      "profile.html";
+
+  },1500);
+
+}
+
+</script>
+
+</body>
+</html>
