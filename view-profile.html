@@ -93,10 +93,6 @@ async function loadProfile(){
     return;
   }
 
-const {
-  data: { user }
-} = await supabaseClient.auth.getUser();
-
 document.getElementById("profile").innerHTML = `
   <h2 style="color:#ff8ee8">${data.name || "नाम उपलब्ध नहीं"}</h2>
 
