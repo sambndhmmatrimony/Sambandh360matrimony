@@ -121,15 +121,48 @@ async function loadInterests() {
         : "📥 आपको Interest मिला";
 
     box.innerHTML += `
-      <div class="card">
-        <h2>💖 Interest</h2>
-        <p class="status">${type}</p>
-        <p>📅 ${new Date(item.created_at).toLocaleString()}</p>
-      </div>
-    `;
+  <div class="card">
+    <h2>💖 Interest</h2>
+    <p class="status">${type}</p>
+    <p>📌 Status: ${item.status}</p>
+    <p>📅 ${new Date(item.created_at).toLocaleString()}</p>
+
+    ${
+      item.receiver_id === user.id && item.status === "pending"
+        ? `
+          <button onclick="updateInterest('${item.id}', 'accepted')">
+            ✅ Accept
+          </button>
+
+          <button onclick="updateInterest('${item.id}', 'rejected')">
+            ❌ Reject
+          </button>
+        `
+        : ""
+    }
+  </div>
+`;
   });
 }
+async function updateInterest(id, status) {
+  const { error } = await supabaseClient
+    .from("interests")
+    .update({ status: status })
+    .eq("id", id);
 
+  if (error) {
+    alert("❌ Update नहीं हुआ: " + error.message);
+    return;
+  }
+
+  alert(
+    status === "accepted"
+      ? "✅ Interest Accept हो गया!"
+      : "❌ Interest Reject हो गया!"
+  );
+
+  loadInterests();
+}
 loadInterests();
 </script>
 
