@@ -102,9 +102,42 @@ async function loadProfile(){
     <p>🏠 राज्य: ${data.state || "-"}</p>
     <p>💼 व्यवसाय: ${data.occupation || "-"}</p>
     <p>📄 परिचय: ${data.bio || "-"}</p>
+    <button onclick="sendInterest('${data.id}')"
+style="margin-top:20px;padding:15px;width:100%;background:#a00068;color:white;border:none;border-radius:10px;font-size:18px;">
+❤️ Interest भेजें
+</button>
   `;
 }
+async function sendInterest(receiverId) {
 
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    alert("पहले Login करें");
+    return;
+  }
+
+  if (user.id === receiverId) {
+    alert("आप खुद को Interest नहीं भेज सकते");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("interests")
+    .insert({
+      sender_id: user.id,
+      receiver_id: receiverId
+    });
+
+  if (error) {
+    alert("Interest नहीं भेजा गया: " + error.message);
+    return;
+  }
+
+  alert("❤️ Interest सफलतापूर्वक भेज दिया गया!");
+}
 loadProfile();
 </script>
 
