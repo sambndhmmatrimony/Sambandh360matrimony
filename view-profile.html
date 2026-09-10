@@ -115,37 +115,7 @@ document.getElementById("profile").innerHTML = `
   </button>
 `;
 
-if (user && user.id !== data.id) {
 
-  let { data: interest } = await supabaseClient
-    .from("interests")
-    .select("id")
-    .eq("sender_id", user.id)
-    .eq("receiver_id", data.id)
-    .eq("status", "accepted")
-    .maybeSingle();
-
-  if (!interest) {
-    const result = await supabaseClient
-      .from("interests")
-      .select("id")
-      .eq("sender_id", data.id)
-      .eq("receiver_id", user.id)
-      .eq("status", "accepted")
-      .maybeSingle();
-
-    interest = result.data;
-  }
-
-  if (interest) {
-    document.getElementById("profile").innerHTML += `
-      <button onclick="location.href='chat.html?user=${data.id}'"
-      style="margin-top:20px;padding:15px;width:100%;background:#0a8f5b;color:white;border:none;border-radius:10px;font-size:18px;">
-      💬 Chat करें
-      </button>
-    `;
-  }
-}
 async function sendInterest(receiverId) {
 
   const {
