@@ -136,6 +136,9 @@ async function loadInterests() {
       }'">
         👤 Profile देखें
       </button>
+      <button onclick="openChat('${item.sender_id === user.id ? item.receiver_id : item.sender_id}')">
+      💬 Chat करें
+    </button>
     `
     : ""
 }
