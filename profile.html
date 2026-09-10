@@ -53,6 +53,9 @@
 <div class="container">
 
   <h1>💍 Sambandh360 Profiles</h1>
+  <button onclick="logout()">
+🚪 Logout
+  </button>
 <input id="search" type="text" placeholder="🔎 नाम या शहर खोजें">
 
 <select id="genderFilter">
@@ -81,7 +84,12 @@
     SUPABASE_KEY
   );
 
-  async function loadProfiles() {
+  async function logout() {
+  await supabase.auth.signOut();
+  location.href = "index.html";
+}
+
+window.logout = logout;
 
     const { data, error } = await supabase
       .from("profiles")
