@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notifications - Sambandh360</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  margin:0;
+  padding:20px;
+  background:#160d14;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+h1{
+  text-align:center;
+  color:#ff8bd8;
+}
+
+.notification{
+  background:#211d1f;
+  margin:15px 0;
+  padding:20px;
+  border-radius:15px;
+}
+
+.unread{
+  border:2px solid #ff66c4;
+}
+
+button{
+  padding:12px 20px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  background:#a00068;
+  color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔔 Notifications</h1>
+
+<div id="notifications">
+Loading...
+</div>
+
+<button onclick="location.href='my-interests.html'">
+⬅️ वापस जाएँ
+</button>
+
+</div>
+
+<script>
+
+const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function loadNotifications(){
+
+  const box = document.getElementById("notifications");
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if(!user){
+    box.innerHTML = "❌ पहले Login करें";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("notifications")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending:false });
+
+  if(error){
+    box.innerHTML = "❌ Notifications लोड नहीं हुईं";
+    console.log(error);
+    return;
+  }
+
+  if(!data || data.length === 0){
+    box.innerHTML = "🔔 अभी कोई Notification नहीं है";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  data.forEach(item => {
+
+    const div = document.createElement("div");
+
+    div.className =
+      item.is_read ? "notification" : "notification unread";
+
+    div.innerHTML = `
+      <h3>🔔 Notification</h3>
+
+      <p>${item.message}</p>
+
+      <small>
+        ${new Date(item.created_at).toLocaleString()}
+      </small>
+    `;
+
+    box.appendChild(div);
+
+  });
+
+}
+
+loadNotifications();
+
+</script>
+
+</body>
+</html>
