@@ -85,7 +85,6 @@ const supabaseClient = supabase.createClient(
 
 
 async function loadInterests() {
-
   const box = document.getElementById("interests");
 
   const {
@@ -97,13 +96,42 @@ async function loadInterests() {
     return;
   }
 
-
   const { data, error } = await supabaseClient
     .from("interests")
     .select("*")
-    .or(
-      `sender_id.eq.${user.id},receiver_id.eq.${user.id}`
-    )
-    .order("created_at", {
-      ascending: false
-    });
+    .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    box.innerHTML = "❌ Interests लोड नहीं हुए: " + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    box.innerHTML = "💌 अभी कोई Interest नहीं मिला।";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  data.forEach(item => {
+    const type =
+      item.sender_id === user.id
+        ? "📤 आपने Interest भेजा"
+        : "📥 आपको Interest मिला";
+
+    box.innerHTML += `
+      <div class="card">
+        <h2>💖 Interest</h2>
+        <p class="status">${type}</p>
+        <p>📅 ${new Date(item.created_at).toLocaleString()}</p>
+      </div>
+    `;
+  });
+}
+
+loadInterests();
+</script>
+
+</body>
+</html>
