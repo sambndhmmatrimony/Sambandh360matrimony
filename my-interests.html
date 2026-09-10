@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Interests - Sambandh360</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #160d14;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff8bd8;
+    }
+
+    .card {
+      background: #211d1f;
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .card h2 {
+      color: #ff8bd8;
+    }
+
+    .status {
+      color: #ffd166;
+      font-weight: bold;
+    }
+
+    .back {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: #a00068;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>❤️ My Interests</h1>
+
+  <div id="interests">
+    Loading...
+  </div>
+
+  <button class="back" onclick="location.href='profile.html'">
+    ⬅️ वापस Profile पर जाएँ
+  </button>
+
+</div>
+
+<script>
+
+const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+async function loadInterests() {
+
+  const box = document.getElementById("interests");
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    box.innerHTML = "❌ पहले Login करें";
+    return;
+  }
+
+
+  const { data, error } = await supabaseClient
+    .from("interests")
+    .select("*")
+    .or(
+      `sender_id.eq.${user.id},receiver_id.eq.${user.id}`
+    )
+    .order("created_at", {
+      ascending: false
+    });
