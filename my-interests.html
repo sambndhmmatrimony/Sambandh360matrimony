@@ -172,9 +172,12 @@ async function updateInterest(id, status) {
       ? "✅ Interest Accept हो गया!"
       : "❌ Interest Reject हो गया!"
   );
+  }
 
-  loadInterests();
+ async function openChat(userId) {
+  window.location.href = "chat.html?user=" + userId;
 }
+  
 loadInterests();
 </script>
 
