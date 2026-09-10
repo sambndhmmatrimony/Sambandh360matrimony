@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Profile - Sambandh360</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f7f1f5;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:600px;
+  margin:20px auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 20px #0002;
+}
+
+h1{
+  text-align:center;
+  color:#92256f;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+input,select,textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px;
+  margin-top:6px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+}
+
+textarea{
+  min-height:120px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  margin-top:20px;
+  border:0;
+  border-radius:10px;
+  background:#92256f;
+  color:white;
+  font-size:18px;
+}
+
+button:disabled{
+  opacity:.6;
+}
+
+#message{
+  margin-top:15px;
+  text-align:center;
+  font-size:16px;
+}
+
+#preview{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:50%;
+  display:none;
+  margin:15px auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💍 Sambandh360<br>प्रोफाइल Edit करें</h1>
+
+<label>पूरा नाम</label>
+<input id="name" type="text">
+
+<label>उम्र</label>
+<input id="age" type="number">
+
+<label>Gender</label>
+<select id="gender">
+<option value="">Select Gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+
+<label>शहर</label>
+<input id="city" type="text">
+
+<label>राज्य</label>
+<input id="state" type="text">
+
+<label>व्यवसाय</label>
+<input id="occupation" type="text">
+
+<label>परिचय</label>
+<textarea id="bio"></textarea>
+
+<label>Profile Photo बदलें</label>
+<input id="photo" type="file" accept="image/*">
+
+<img id="preview">
+
+<button id="saveBtn" onclick="updateProfile()">
+💾 Update Profile
+</button>
+
+<div id="message"></div>
+
+</div>
+
+<script type="module">
+
+import { createClient } from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+/*
+  IMPORTANT:
+  नीचे वही Supabase URL और Publishable Key डालें
+  जो आपकी बाकी working files में है।
+*/
+
+const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* Load current profile */
+
+async function loadProfile(){
+
+  const message = document.getElementById("message");
+
+  const {data:userData,error:userError} =
+    await supabase.auth.getUser();
+
+  if(userError || !userData.user){
+
+    message.innerText =
+      "❌ पहले Login करें।";
+
+    return;
+  }
+
+  const user = userData.user;
+
+  const {data,error} =
+    await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id",user.id)
+      .single();
+
+  if(error){
+
+    message.innerText =
+      "❌ Profile नहीं मिली: " + error.message;
+
+    return;
+  }
+
+  document.getElementById("name").value =
+    data.name || "";
+
+  document.getElementById("age").value =
+    data.age || "";
+
+  document.getElementById("gender").value =
+    data.gender || "";
+
+  document.getElementById("city").value =
+    data.city || "";
+
+  document.getElementById("state").value =
+    data.state || "";
+
+  document.getElementById("occupation").value =
+    data.occupation || "";
+
+  document.getElementById("bio").value =
+    data.bio || "";
+
+  if(data.photo_url){
+
+    const preview =
+      document.getElementById("preview");
+
+    preview.src = data.photo_url;
+
+    preview.style.display = "block";
+  }
+}
+
+
+/* Photo preview */
+
+document.getElementById("photo")
+.addEventListener("change",function(){
+
+  const file = this.files[0];
+
+  if(!file){
+    return;
+  }
+
+  const preview =
+    document.getElementById("preview");
+
+  preview.src =
+    URL.createObjectURL(file);
+
+  preview.style.display = "block";
+});
+
+
+/* Update profile */
+
+async function updateProfile(){
+
+  const message =
+    document.getElementById("message");
+
+  const saveBtn =
+    document.getElementById("saveBtn");
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const age =
+    document.getElementById("age").value;
+
+  const gender =
+    document.getElementById("gender").value;
+
+  const city =
+    document.getElementById("city").value.trim();
+
+  const state =
+    document.getElementById("state").value.trim();
+
+  const occupation =
+    document.getElementById("occupation").value.trim();
+
+  const bio =
+    document.getElementById("bio").value.trim();
+
+  const photoFile =
+    document.getElementById("photo").files[0];
+
+
+  if(!name || !age || !gender || !city){
+
+    message.innerText =
+      "कृपया नाम, उम्र, Gender और शहर भरें।";
+
+    return;
+  }
+
+
+  saveBtn.disabled = true;
+
+  message.innerText =
+    "Profile update हो रही है...";
+
+
+  const {data:userData,error:userError} =
+    await supabase.auth.getUser();
+
+
+  if(userError || !userData.user){
+
+    message.innerText =
+      "❌ पहले Login करें।";
+
+    saveBtn.disabled = false;
+
+    return;
+  }
+
+
+  const user = userData.user;
+
+  let photoUrl = null;
+
+
+  /* New photo upload */
+
+  if(photoFile){
+
+    const fileExt =
+      photoFile.name.split(".").pop();
+
+    const fileName =
+      user.id + "-" +
+      Date.now() +
+      "." +
+      fileExt;
+
+
+    const {error:uploadError} =
+      await supabase.storage
+      .from("profile-photos")
+      .upload(
+        fileName,
+        photoFile,
+        {upsert:true}
+      );
+
+
+    if(uploadError){
+
+      message.innerText =
+        "❌ Photo upload नहीं हुई: " +
+        uploadError.message;
+
+      saveBtn.disabled = false;
+
+      return;
+    }
+
+
+    const {data:publicData} =
+      supabase.storage
+      .from("profile-photos")
+      .getPublicUrl(fileName);
+
+
+    photoUrl =
+      publicData.publicUrl;
+  }
+
+
+  /* Update database */
+
+  const updateData = {
+
+    name:name,
+
+    age:Number(age),
+
+    gender:gender,
+
+    city:city,
+
+    state:state,
+
+    occupation:occupation,
+
+    bio:bio
+  };
+
+
+  if(photoUrl){
+
+    updateData.photo_url =
+      photoUrl;
+  }
+
+
+  const {error} =
+    await supabase
+    .from("profiles")
+    .update(updateData)
+    .eq("id",user.id);
+
+
+  if(error){
+
+    message.innerText =
+      "❌ Profile update नहीं हुई: " +
+      error.message;
+
+    saveBtn.disabled = false;
+
+    return;
+  }
+
+
+  message.innerText =
+    "✅ Profile सफलतापूर्वक Update हो गई!";
+
+  saveBtn.disabled = false;
+
+
+  setTimeout(function(){
+
+    window.location.href =
+      "profile.html";
+
+  },1500);
+}
+
+
+/* Make button work */
+
+window.updateProfile =
+  updateProfile;
+
+
+/* Load profile */
+
+loadProfile();
+
+</script>
