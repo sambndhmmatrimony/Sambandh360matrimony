@@ -152,6 +152,60 @@ async function sendInterest(receiverId) {
 
   alert("❤️ Interest सफलतापूर्वक भेज दिया गया!");
 }
+  async function toggleShortlist(profileId) {
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    alert("पहले Login करें");
+    return;
+  }
+
+  if (user.id === profileId) {
+    alert("आप खुद को Shortlist नहीं कर सकते");
+    return;
+  }
+
+  const { data: existing } = await supabaseClient
+    .from("shortlists")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("profile_id", profileId)
+    .maybeSingle();
+
+  if (existing) {
+
+    const { error } = await supabaseClient
+      .from("shortlists")
+      .delete()
+      .eq("id", existing.id);
+
+    if (error) {
+      alert("❌ Shortlist हट नहीं सकी");
+      return;
+    }
+
+    alert("💔 Shortlist से हटा दिया गया");
+
+  } else {
+
+    const { error } = await supabaseClient
+      .from("shortlists")
+      .insert({
+        user_id: user.id,
+        profile_id: profileId
+      });
+
+    if (error) {
+      alert("❌ Shortlist नहीं हुआ: " + error.message);
+      return;
+    }
+
+    alert("❤️ Profile Shortlist हो गई!");
+  }
+  }
 loadProfile();
 </script>
 
