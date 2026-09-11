@@ -8,40 +8,108 @@
 <style>
 body{
   font-family:Arial,sans-serif;
-  background:#160d14;
-  color:white;
+  background:linear-gradient(135deg,#fff5f8,#f8e8f0);
   margin:0;
-  padding:20px;
+  padding:15px;
+  color:#333;
 }
 
 .container{
-  max-width:600px;
-  margin:30px auto;
-  background:#211d1f;
-  padding:25px;
+  max-width:650px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
   border-radius:25px;
-  box-shadow:0 0 20px #8e2468;
+  box-shadow:0 5px 20px rgba(146,37,111,0.15);
 }
 
 h1{
-  color:#ff8ee8;
+  color:#92256f;
   text-align:center;
+  font-size:28px;
+  margin:10px 0 20px;
 }
 
 .profile{
-  font-size:20px;
-  line-height:1.8;
+  background:#fff;
+  padding:20px;
+  margin:18px 0;
+  border-radius:22px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.10);
+  border:1px solid #f0d8e5;
+}
+
+.profile h2{
+  color:#92256f;
+  margin-top:0;
+  font-size:25px;
+}
+
+.profile img{
+  width:180px;
+  height:180px;
+  object-fit:cover;
+  border-radius:50%;
+  display:block;
+  margin:15px auto;
+  border:5px solid #f3d3e3;
+}
+
+.profile p{
+  font-size:17px;
+  margin:10px 0;
+  line-height:1.6;
 }
 
 button{
   width:100%;
   padding:14px;
-  margin-top:20px;
-  border:0;
-  border-radius:10px;
-  background:#9b176d;
+  margin-top:10px;
+  border:none;
+  border-radius:12px;
+  background:#92256f;
   color:white;
-  font-size:18px;
+  font-size:17px;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+input,select{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  margin-top:10px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  background:white;
+}
+
+@media(max-width:600px){
+  body{
+    padding:10px;
+  }
+
+  .container{
+    padding:15px;
+    margin:10px auto;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  .profile{
+    padding:16px;
+  }
+
+  .profile img{
+    width:160px;
+    height:160px;
+  }
 }
 </style>
 </head>
