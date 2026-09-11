@@ -166,10 +166,11 @@
   <img src="home-banner.png"
        style="width:100%;max-width:1450px;border-radius:18px;display:block;margin:auto;">
 
-  <button onclick="document.getElementById('email').focus()"
-    style="margin-top:25px;padding:16px 55px;border:none;border-radius:12px;background:linear-gradient(90deg,#8e24aa,#d81b60);color:white;font-size:20px;font-weight:bold;">
-    🔒 Login / Register &nbsp; ❯
-  </button>
+  <button
+  onclick="document.getElementById('email').scrollIntoView({behavior:'smooth'}); document.getElementById('email').focus();"
+  style="margin-top:25px;padding:16px 55px;border:none;border-radius:10px;background:linear-gradient(90deg,#6a1b9a,#c62828);color:white;font-size:20px;cursor:pointer;">
+  🔒 Login / Register &nbsp;›
+</button>
 
   <p style="font-size:20px;color:#666;margin-top:12px;">
     Find Your Perfect Life Partner
