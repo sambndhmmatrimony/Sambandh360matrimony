@@ -198,6 +198,12 @@ function showProfiles(list) {
       <div class="profile">
         <h2>${profile.name || "नाम उपलब्ध नहीं"}</h2>
 ${profile.photo_url ? `<img src="${profile.photo_url}" style="width:150px;height:150px;object-fit:cover;border-radius:50%;">` : ""}
+        <p>
+🟢 ${profile.last_seen &&
+   (new Date() - new Date(profile.last_seen)) < 5 * 60 * 1000
+   ? "Online"
+   : "Offline"}
+</p>
         <p>🎂 उम्र: ${profile.age || "-"}</p>
 
         <p>👤 लिंग: ${profile.gender || "-"}</p>
