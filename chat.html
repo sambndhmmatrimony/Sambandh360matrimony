@@ -194,7 +194,15 @@ async function sendMessage(){
 
     return;
   }
-
+// Chat Notification
+await supabaseClient
+  .from("notifications")
+  .insert({
+    user_id: receiverId,
+    type: "chat",
+    message: "💬 आपको नया Chat Message मिला है!",
+    related_id: currentUser.id
+  });
   input.value = "";
 
   loadChat();
