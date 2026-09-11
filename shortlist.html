@@ -156,14 +156,30 @@
               onclick="location.href='view-profile.html?id=${p.id}'">
               💖 पूरी Profile देखें
             </button>
-
+<button class="btn"
+  onclick="removeShortlist('${item.id}')">
+  💔 Shortlist से हटाएँ
+</button>
           </div>
         `;
       });
 
       document.getElementById("shortlistContainer").innerHTML = html;
     }
+async function removeShortlist(id) {
+  const { error } = await supabaseClient
+    .from("shortlists")
+    .delete()
+    .eq("id", id);
 
+  if (error) {
+    alert("❌ Shortlist से हट नहीं सकी: " + error.message);
+    return;
+  }
+
+  alert("💔 Shortlist से Profile हटा दी गई!");
+  loadShortlists();
+}
     loadShortlists();
   </script>
 
