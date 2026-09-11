@@ -135,6 +135,12 @@ async function loadNotifications(){
         </button>
       `
       : `
+      ${item.type === "chat" && item.related_id ? `
+<br>
+<button onclick="openChatFromNotification('${item.related_id}')">
+💬 Chat खोलें
+</button>
+` : ""}
         <br><br>
         <span>✅ पढ़ा हुआ</span>
       `
@@ -147,7 +153,6 @@ async function loadNotifications(){
 
 }
 async function markAsRead(id) {
-
   const { error } = await supabaseClient
     .from("notifications")
     .update({ is_read: true })
@@ -157,9 +162,11 @@ async function markAsRead(id) {
     alert("❌ Read नहीं हुआ: " + error.message);
     return;
   }
-
   loadNotifications();
 }
+  function openChatFromNotification(userId) {
+  location.href = `chat.html?user=${userId}`;
+  }
 loadNotifications();
 
 </script>
