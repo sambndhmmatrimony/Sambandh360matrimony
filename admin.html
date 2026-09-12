@@ -193,6 +193,8 @@ async function loadProfiles(){
       <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
       <p>📝 परिचय: ${profile.bio || "-"}</p>
       <button onclick="location.href='edit-profile.html?id=${profile.id}'">✏️ Edit Profile</button>
+      <button onclick="approveProfile('${p.id}')">✅ Approve</button>
+<button onclick="rejectProfile('${p.id}')">❌ Reject</button>
       <button onclick="deleteProfile('${profile.id}')">🗑️ Delete Profile</button>
     `;
 
