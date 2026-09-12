@@ -236,6 +236,35 @@ async function deleteProfile(profileId) {
   loadProfiles();
 }
   window.deleteProfile = deleteProfile;
+  async function approveProfile(id) {
+  const { error } = await supabaseClient
+    .from("profiles")
+    .update({ is_approved: true })
+    .eq("id", id);
+
+  if (error) {
+    alert("Approve नहीं हुआ: " + error.message);
+    return;
+  }
+
+  alert("Profile Approved ✅");
+  loadProfiles();
+}
+
+async function rejectProfile(id) {
+  const { error } = await supabaseClient
+    .from("profiles")
+    .update({ is_approved: false })
+    .eq("id", id);
+
+  if (error) {
+    alert("Reject नहीं हुआ: " + error.message);
+    return;
+  }
+
+  alert("Profile Rejected ❌");
+  loadProfiles();
+}
 </script>
 
 </body>
