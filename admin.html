@@ -192,6 +192,7 @@ async function loadProfiles(){
       <p>🏠 राज्य: ${profile.state || "-"}</p>
       <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
       <p>📝 परिचय: ${profile.bio || "-"}</p>
+      <button onclick="deleteProfile('${profile.id}')">🗑️ Delete Profile</button>
     `;
 
     profiles.appendChild(card);
@@ -213,7 +214,24 @@ async function logout(){
 }
 
 window.logout = logout;
+async function deleteProfile(profileId) {
+  if (!confirm("क्या आप यह Profile delete करना चाहते हैं?")) {
+    return;
+  }
 
+  const { error } = await supabase
+    .from("profiles")
+    .delete()
+    .eq("id", profileId);
+
+  if (error) {
+    alert("Profile delete नहीं हुई: " + error.message);
+    return;
+  }
+
+  alert("Profile delete हो गई ✅");
+  loadProfiles();
+}
 </script>
 
 </body>
