@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Sambandh360</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f7f1f5;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+h1{
+  text-align:center;
+  color:#92256f;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  margin:15px 0;
+  border-radius:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:0;
+  border-radius:12px;
+  background:#92256f;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  box-sizing:border-box;
+  border-radius:12px;
+  border:1px solid #ccc;
+  margin-top:10px;
+  font-size:16px;
+}
+
+#message{
+  text-align:center;
+  font-size:17px;
+  margin:15px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👑 Sambandh360 Admin Panel</h1>
+
+<div class="card">
+  <h2>🔐 Admin Login</h2>
+
+  <input id="email" type="email" placeholder="Admin Email">
+
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="adminLogin()">Login</button>
+
+  <div id="message"></div>
+</div>
+
+<div id="adminArea" style="display:none;">
+
+  <div class="card">
+    <h2>👥 Profiles</h2>
+    <button onclick="loadProfiles()">🔄 Profiles Refresh करें</button>
+  </div>
+
+  <div id="profiles"></div>
+
+  <div class="card">
+    <button onclick="logout()">🚪 Logout</button>
+  </div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { createClient } from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function adminLogin(){
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const message =
+    document.getElementById("message");
+
+  if(!email || !password){
+    message.innerText = "Email और Password डालें";
+    return;
+  }
+
+  const { error } =
+    await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if(error){
+    message.innerText =
+      "Login असफल: " + error.message;
+    return;
+  }
+
+  message.innerText = "Admin Login सफल ✅";
+
+  document.getElementById("adminArea").style.display =
+    "block";
+
+  await loadProfiles();
+}
+
+window.adminLogin = adminLogin;
+
+async function loadProfiles(){
+
+  const profiles =
+    document.getElementById("profiles");
+
+  profiles.innerHTML =
+    "<div class='card'>Profiles लोड हो रही हैं...</div>";
+
+  const { data, error } =
+    await supabase
+      .from("profiles")
+      .select("*")
+      .order("created_at", { ascending:false });
+
+  if(error){
+    profiles.innerHTML =
+      "<div class='card'>Error: " +
+      error.message +
+      "</div>";
+    return;
+  }
+
+  if(!data || data.length === 0){
+    profiles.innerHTML =
+      "<div class='card'>कोई profile नहीं मिली।</div>";
+    return;
+  }
+
+  profiles.innerHTML = "";
+
+  data.forEach(profile => {
+
+    const card =
+      document.createElement("div");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <h2>${profile.full_name || "नाम नहीं है"}</h2>
+      <p>🎂 उम्र: ${profile.age || "-"}</p>
+      <p>👤 Gender: ${profile.gender || "-"}</p>
+      <p>📍 शहर: ${profile.city || "-"}</p>
+      <p>🏠 राज्य: ${profile.state || "-"}</p>
+      <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
+      <p>📝 परिचय: ${profile.bio || "-"}</p>
+    `;
+
+    profiles.appendChild(card);
+
+  });
+}
+
+window.loadProfiles = loadProfiles;
+
+async function logout(){
+
+  await supabase.auth.signOut();
+
+  document.getElementById("adminArea").style.display =
+    "none";
+
+  document.getElementById("message").innerText =
+    "Logout हो गया ✅";
+}
+
+window.logout = logout;
+
+</script>
+
+</body>
+</html>
