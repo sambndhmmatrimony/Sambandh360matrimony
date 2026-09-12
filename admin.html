@@ -192,6 +192,7 @@ async function loadProfiles(){
       <p>🏠 राज्य: ${profile.state || "-"}</p>
       <p>💼 व्यवसाय: ${profile.occupation || "-"}</p>
       <p>📝 परिचय: ${profile.bio || "-"}</p>
+      <button onclick="location.href='edit-profile.html?id=${profile.id}'">✏️ Edit Profile</button>
       <button onclick="deleteProfile('${profile.id}')">🗑️ Delete Profile</button>
     `;
 
