@@ -184,6 +184,16 @@ async function loadProfiles() {
     })
     .eq("user_id", user.id);
   }
+  if (user) {
+  setInterval(async () => {
+    await supabase
+      .from("profiles")
+      .update({
+        last_seen: new Date().toISOString()
+      })
+      .eq("user_id", user.id);
+  }, 60000);
+  }
     const box = document.getElementById("profiles");
 
     if (error) {
