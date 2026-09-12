@@ -51,7 +51,7 @@ async function login() {
 }
 }
 async function forgotPassword() {
-  const email = document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.replace(/\s+/g, "").toLowerCase();
 
   if (!email) {
     alert("पहले अपना Email डालें");
