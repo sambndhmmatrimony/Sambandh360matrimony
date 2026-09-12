@@ -237,7 +237,7 @@ async function deleteProfile(profileId) {
 }
   window.deleteProfile = deleteProfile;
   async function approveProfile(id) {
-  const { error } = await supabaseClient
+  const { error } = await supabase
     .from("profiles")
     .update({ is_approved: true })
     .eq("id", id);
@@ -252,7 +252,7 @@ async function deleteProfile(profileId) {
 }
 
 async function rejectProfile(id) {
-  const { error } = await supabaseClient
+  const { error } = await supabase
     .from("profiles")
     .update({ is_approved: false })
     .eq("id", id);
@@ -265,6 +265,8 @@ async function rejectProfile(id) {
   alert("Profile Rejected ❌");
   loadProfiles();
 }
+  window.approveProfile = approveProfile;
+window.rejectProfile = rejectProfile;
 </script>
 
 </body>
