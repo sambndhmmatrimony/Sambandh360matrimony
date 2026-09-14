@@ -125,7 +125,7 @@ async function adminLogin(){
     return;
   }
 
-  const { error } =
+  const { data: authData, error } =
     await supabase.auth.signInWithPassword({
       email: email,
       password: password
@@ -137,6 +137,13 @@ async function adminLogin(){
     return;
   }
 
+  const ADMIN_UID = "78b05690-c070-4fba-a141-7786cbef682b";
+
+if (!authData.user || authData.user.id !== ADMIN_UID) {
+  await supabase.auth.signOut();
+  message.innerText = "❌ आपको Admin की अनुमति नहीं है।";
+  return;
+}
   message.innerText = "Admin Login सफल ✅";
 
   document.getElementById("adminArea").style.display =
