@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Sambandh360 Matrimony</title>
+</head>
+
+<body>
+
+  <div style="max-width:450px;margin:60px auto;padding:25px;text-align:center;">
+
+    <h2>🔐 Login</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="अपना Email डालें"
+      style="width:100%;padding:12px;margin:10px 0;"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="अपना Password डालें"
+      style="width:100%;padding:12px;margin:10px 0;"
+    >
+
+    <button onclick="login()" style="padding:12px 25px;">
+      🔐 Login
+    </button>
+
+    <button onclick="window.location.href='index.html'" style="padding:12px 25px;margin-left:8px;">
+      📝 Registration
+    </button>
+
+    <button onclick="forgotPassword()" style="display:block;margin:20px auto;">
+      Forgot Password
+    </button>
+
+    <p id="message"></p>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
