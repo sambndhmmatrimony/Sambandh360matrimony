@@ -225,7 +225,7 @@ async function saveProfile(){
   if(userError || !userData.user){
 
     message.innerText =
-      "पहले Login करें।";
+  "Login समस्या: " + (userError?.message || "Session नहीं मिली");
 
     saveBtn.disabled = false;
     return;
