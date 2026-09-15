@@ -38,45 +38,51 @@ async function register() {
   };
 
   const formData = {
-    full_name: getValue("full_name"),
-    mobile: getValue("mobile"),
-    gender: getValue("gender"),
-    date_of_birth: getValue("date_of_birth"),
-    religion: getValue("religion"),
-    caste: getValue("caste"),
-    mother_tongue: getValue("mother_tongue"),
+  full_name: getValue("full_name"),
+  mobile: getValue("mobile"),
+  gender: getValue("gender"),
+  date_of_birth: getValue("date_of_birth"),
+  age: Number(getValue("age")) || null,
+  marital_status: getValue("marital_status"),
+  height: getValue("height"),
+  weight: getValue("weight"),
+  complexion: getValue("complexion"),
 
-    city: getValue("city"),
-    state: getValue("state"),
+  religion: getValue("religion"),
+  caste: getValue("caste"),
+  mother_tongue: getValue("mother_tongue"),
 
-    education: getValue("education"),
-    education_details: getValue("education_details"),
-    college: getValue("college"),
-    occupation: getValue("occupation"),
-    company: getValue("company"),
-    income: getValue("income"),
+  city: getValue("city"),
+  state: getValue("state"),
 
-    father_name: getValue("father_name"),
-    mother_name: getValue("mother_name"),
-    siblings: getValue("siblings"),
-    family_type: getValue("family_type"),
-    family_status: getValue("family_status"),
+  education: getValue("education"),
+  education_details: getValue("education_details"),
+  college: getValue("college"),
+  occupation: getValue("occupation"),
+  company: getValue("company"),
+  income: getValue("income"),
 
-    food_habit: getValue("food_habit"),
-    smoking: getValue("smoking"),
-    drinking: getValue("drinking"),
+  father_name: getValue("father_name"),
+  mother_name: getValue("mother_name"),
+  siblings: getValue("siblings"),
+  family_type: getValue("family_type"),
+  family_status: getValue("family_status"),
 
-    about: getValue("about"),
+  food_habit: getValue("food_habit"),
+  smoking: getValue("smoking"),
+  drinking: getValue("drinking"),
 
-    partner_age_min: getValue("partner_age_min"),
-    partner_age_max: getValue("partner_age_max"),
-    partner_height: getValue("partner_height"),
-    partner_education: getValue("partner_education"),
-    partner_occupation: getValue("partner_occupation"),
-    partner_city: getValue("partner_city"),
-    partner_religion: getValue("partner_religion"),
-    partner_caste: getValue("partner_caste")
-  };
+  about: getValue("about"),
+
+  partner_age_min: Number(getValue("partner_age_min")) || null,
+  partner_age_max: Number(getValue("partner_age_max")) || null,
+  partner_height: getValue("partner_height"),
+  partner_education: getValue("partner_education"),
+  partner_occupation: getValue("partner_occupation"),
+  partner_city: getValue("partner_city"),
+  partner_religion: getValue("partner_religion"),
+  partner_caste: getValue("partner_caste")
+};
 
   message.innerText = "Registration हो रही है...";
 
