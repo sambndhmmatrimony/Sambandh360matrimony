@@ -172,7 +172,7 @@ style="width:180px;max-width:100%;height:auto;">
 
     <div style="display:flex;gap:10px;align-items:center;">
   <button type="button"
-    onclick="window.location.href='index.html#registration'"
+  onclick="document.getElementById('registration').style.display='block'; document.getElementById('registration').scrollIntoView({behavior:'smooth'});"
     style="padding:12px 20px;border:2px solid #8e24aa;border-radius:10px;background:white;color:#7b1fa2;font-weight:bold;">
     📝 Registration
   </button>
@@ -196,7 +196,7 @@ style="width:180px;max-width:100%;height:auto;">
 
 </section>
 
-<div class="container">
+<div id="registration" class="container" style="display:none;">
   <div class="card">
 
     <h2>💍 पूरा Matrimonial Registration Form</h2>
