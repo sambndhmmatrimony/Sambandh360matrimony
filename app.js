@@ -15,25 +15,92 @@ const supabaseClient = supabase.createClient(
 );
 
 async function register() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
   const message = document.getElementById("message");
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  const terms = document.getElementById("terms");
 
   if (!email || !password) {
     message.innerText = "Email और Password डालें";
     return;
   }
 
-  const { error } = await supabaseClient.auth.signUp({
-    email,
-    password
-  });
+  if (terms && !terms.checked) {
+    message.innerText = "Terms & Privacy स्वीकार करें";
+    return;
+  }
+
+  const getValue = (id) => {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  };
+
+  const formData = {
+    full_name: getValue("full_name"),
+    mobile: getValue("mobile"),
+    gender: getValue("gender"),
+    date_of_birth: getValue("date_of_birth"),
+    religion: getValue("religion"),
+    caste: getValue("caste"),
+    mother_tongue: getValue("mother_tongue"),
+
+    city: getValue("city"),
+    state: getValue("state"),
+
+    education: getValue("education"),
+    education_details: getValue("education_details"),
+    college: getValue("college"),
+    occupation: getValue("occupation"),
+    company: getValue("company"),
+    income: getValue("income"),
+
+    father_name: getValue("father_name"),
+    mother_name: getValue("mother_name"),
+    siblings: getValue("siblings"),
+    family_type: getValue("family_type"),
+    family_status: getValue("family_status"),
+
+    food_habit: getValue("food_habit"),
+    smoking: getValue("smoking"),
+    drinking: getValue("drinking"),
+
+    about: getValue("about"),
+
+    partner_age_min: getValue("partner_age_min"),
+    partner_age_max: getValue("partner_age_max"),
+    partner_height: getValue("partner_height"),
+    partner_education: getValue("partner_education"),
+    partner_occupation: getValue("partner_occupation"),
+    partner_city: getValue("partner_city"),
+    partner_religion: getValue("partner_religion"),
+    partner_caste: getValue("partner_caste")
+  };
+
+  message.innerText = "Registration हो रही है...";
+
+  const { data, error } =
+    await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: formData
+      }
+    });
 
   if (error) {
-    message.innerText = error.message;
-  } else {
-    message.innerText = "Registration सफल! Email verify करें।";
+    message.innerText = "Registration असफल: " + error.message;
+    return;
   }
+
+  if (!data.user) {
+    message.innerText = "Registration नहीं हो सकी।";
+    return;
+  }
+
+  message.innerText =
+    "Registration सफल! ✅ अब अपने Email को verify करें।";
 }
 
 async function login() {
