@@ -219,20 +219,20 @@ async function saveProfile(){
 
 
   /* Current logged-in user */
-  const { data: userData, error: userError } =
-    await supabase.auth.getUser();
+  const { data: sessionData, error: sessionError } =
+  await supabase.auth.getSession();
 
-  if(userError || !userData.user){
+if(sessionError || !sessionData.session){
 
-    message.innerText =
-  "Login समस्या: " + (userError?.message || "Session नहीं मिली");
+  message.innerText =
+    "Login समस्या: " +
+    (sessionError?.message || "Session नहीं मिली");
 
-    saveBtn.disabled = false;
-    return;
-  }
+  saveBtn.disabled = false;
+  return;
+}
 
-
-  const user = userData.user;
+const user = sessionData.session.user;
 
   let photoUrl = null;
 
