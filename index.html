@@ -203,19 +203,201 @@ style="width:180px;max-width:100%;height:auto;">
 
 <div class="container">
   <div class="card">
-    <h2>🔐 Login / Register</h2>
 
-    <input type="email" id="email" placeholder="अपना Email डालें">
+    <h2>💍 पूरा Matrimonial Registration Form</h2>
 
-    <input type="password" id="password" placeholder="अपना Password डालें">
+    <h3>🔐 Account Details</h3>
 
-    <button onclick="login()">🔐 Login</button>
+    <input type="email" id="email" placeholder="अपना Email डालें" required>
 
-    <button onclick="register()" class="secondary">📝 Register</button>
+    <input type="password" id="password"
+           placeholder="अपना Password डालें" required>
 
-    <button onclick="forgotPassword()" class="outline">🔑 Forgot Password</button>
+    <h3>👤 Basic Details</h3>
+
+    <input type="text" id="full_name"
+           placeholder="पूरा नाम" required>
+
+    <input type="tel" id="mobile"
+           placeholder="मोबाइल नंबर">
+
+    <select id="gender" required>
+      <option value="">Gender चुनें</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>जन्म तारीख</label>
+    <input type="date" id="date_of_birth">
+
+    <input type="number" id="age"
+           placeholder="उम्र">
+
+    <select id="marital_status">
+      <option value="">वैवाहिक स्थिति चुनें</option>
+      <option value="Never Married">Never Married</option>
+      <option value="Divorced">Divorced</option>
+      <option value="Widowed">Widowed</option>
+      <option value="Separated">Separated</option>
+    </select>
+
+    <input type="text" id="height"
+           placeholder="कद (जैसे 5'6&quot;)">
+
+    <input type="text" id="weight"
+           placeholder="वजन">
+
+    <input type="text" id="complexion"
+           placeholder="रंग / Complexion">
+
+    <h3>🛕 Religion & Community</h3>
+
+    <input type="text" id="religion"
+           placeholder="धर्म">
+
+    <input type="text" id="caste"
+           placeholder="जाति / Community">
+
+    <input type="text" id="mother_tongue"
+           placeholder="मातृभाषा">
+
+    <h3>📍 Location</h3>
+
+    <input type="text" id="city"
+           placeholder="शहर">
+
+    <input type="text" id="state"
+           placeholder="राज्य">
+
+    <h3>🎓 Education & Career</h3>
+
+    <input type="text" id="education"
+           placeholder="शिक्षा">
+
+    <input type="text" id="education_details"
+           placeholder="Education की पूरी जानकारी">
+
+    <input type="text" id="college"
+           placeholder="College / University">
+
+    <input type="text" id="occupation"
+           placeholder="व्यवसाय / Occupation">
+
+    <input type="text" id="company"
+           placeholder="Company / Business">
+
+    <input type="text" id="income"
+           placeholder="आय / Income">
+
+    <h3>👨‍👩‍👧‍👦 Family Details</h3>
+
+    <input type="text" id="father_name"
+           placeholder="पिता का नाम">
+
+    <input type="text" id="mother_name"
+           placeholder="माता का नाम">
+
+    <input type="text" id="siblings"
+           placeholder="भाई / बहन की जानकारी">
+
+    <select id="family_type">
+      <option value="">Family Type चुनें</option>
+      <option value="Joint">Joint Family</option>
+      <option value="Nuclear">Nuclear Family</option>
+    </select>
+
+    <select id="family_status">
+      <option value="">Family Status चुनें</option>
+      <option value="Middle Class">Middle Class</option>
+      <option value="Upper Middle Class">Upper Middle Class</option>
+      <option value="Affluent">Affluent</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <h3>🍽️ Lifestyle</h3>
+
+    <select id="food_habit">
+      <option value="">Food Habit चुनें</option>
+      <option value="Vegetarian">Vegetarian</option>
+      <option value="Non-Vegetarian">Non-Vegetarian</option>
+      <option value="Eggetarian">Eggetarian</option>
+    </select>
+
+    <select id="smoking">
+      <option value="">Smoking</option>
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+      <option value="Occasionally">Occasionally</option>
+    </select>
+
+    <select id="drinking">
+      <option value="">Drinking</option>
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+      <option value="Occasionally">Occasionally</option>
+    </select>
+
+    <h3>📝 About Me</h3>
+
+    <textarea id="about"
+              placeholder="अपने बारे में पूरी जानकारी लिखें"
+              rows="5"></textarea>
+
+    <textarea id="bio"
+              placeholder="छोटा परिचय"
+              rows="4"></textarea>
+
+    <h3>❤️ Partner Preference</h3>
+
+    <input type="number" id="partner_age_min"
+           placeholder="Partner की न्यूनतम उम्र">
+
+    <input type="number" id="partner_age_max"
+           placeholder="Partner की अधिकतम उम्र">
+
+    <input type="text" id="partner_height"
+           placeholder="Partner की पसंदीदा Height">
+
+    <input type="text" id="partner_education"
+           placeholder="Partner की Education">
+
+    <input type="text" id="partner_occupation"
+           placeholder="Partner का Occupation">
+
+    <input type="text" id="partner_city"
+           placeholder="Partner का पसंदीदा शहर">
+
+    <input type="text" id="partner_religion"
+           placeholder="Partner का Religion">
+
+    <input type="text" id="partner_caste"
+           placeholder="Partner की Caste / Community">
+
+    <h3>📷 Profile Photo</h3>
+
+    <input type="file" id="photo"
+           accept="image/*">
+
+    <label>
+      <input type="checkbox" id="terms" required>
+      मैंने Terms & Privacy Policy स्वीकार की है।
+    </label>
+
+    <button onclick="register()" class="secondary">
+      📝 पूरा Registration Submit करें
+    </button>
+
+    <button onclick="login()" type="button">
+      🔐 Login
+    </button>
+
+    <button onclick="forgotPassword()" type="button" class="outline">
+      🔑 Forgot Password
+    </button>
 
     <div id="message"></div>
+
   </div>
 </div>
   <div class="container">
