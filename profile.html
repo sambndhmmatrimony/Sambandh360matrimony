@@ -196,7 +196,7 @@ async function loadProfiles() {
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
-    .eq("is_approved", true)
+    .eq("id", user.id)
     .order("created_at", { ascending: false });
 
   const box = document.getElementById("profiles");
