@@ -38,17 +38,30 @@ async function login() {
     return;
   }
 
-  const { error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+  email: email,
+  password: password
+});
 
-  if (error) {
-    message.innerText = "Login असफल: " + error.message;
-  } else {
-  message.innerText = "Login सफल हो गया! ✅";
-  window.location.href = "profile.html";
+if (error) {
+  message.innerText = "Login असफल: " + error.message;
+  return;
 }
+
+const { data: sessionData, error: sessionError } =
+  await supabaseClient.auth.getSession();
+
+if (sessionError || !sessionData.session) {
+  message.innerText =
+    "Login हुआ लेकिन Session नहीं बनी। कृपया फिर Login करें।";
+  return;
+}
+
+message.innerText = "Login सफल हो गया! ✅";
+
+setTimeout(() => {
+  window.location.href = "profile.html";
+}, 500);
 }
 async function forgotPassword() {
   const email = document.getElementById("email").value.replace(/\s+/g, "").toLowerCase();
