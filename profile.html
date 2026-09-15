@@ -155,10 +155,18 @@ button:active {
   const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
   const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
 
-  const supabase = createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+ const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storageKey: "sambandh360-auth"
+    }
+  }
+);
 
   document.getElementById("logoutBtn").onclick = async function () {
   const { error } = await supabase.auth.signOut();
