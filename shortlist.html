@@ -76,10 +76,18 @@
     const SUPABASE_URL = "https://mrzhtybkorajumzunsbr.supabase.co";
     const SUPABASE_KEY = "sb_publishable_OpvjMBKiIqL-9tB-k5Xxhw_MkQhWBqz";
 
-    const supabaseClient = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+  const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storageKey: "sambandh360-auth"
+    }
+  }
+);
 
     async function loadShortlists() {
 
