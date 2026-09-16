@@ -239,42 +239,41 @@ document.getElementById("profile").innerHTML = `
   <button id="interestBtn"
     onclick="sendInterest('${data.id}')"
     style="margin-top:20px;padding:15px;width:100%;background:#a00068;color:white;border:none;border-radius:10px;">
-    ❤️ Interest भेजें
-  </button>
-
-  <button onclick="toggleShortlist('${data.id}')"
-    style="margin-top:10px;padding:15px;width:100%;">
-    ❤️ Shortlist
-  </button>
-  <button onclick="sendContactRequest('${data.id}')"
-style="margin-top:20px;padding:15px;width:100%;background:#9b176d;color:white;border:none;border-radius:10px;font-size:18px;">
-📞 Contact Request भेजें
+  ❤️ Interest भेजें
 </button>
-`;
-
-
 async function sendInterest(receiverId) {
 
-  const {
-    data: { user }
-  } = await supabaseClient.auth.getUser();
+  try {
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser();
 
-  if (!user) {
-    alert("पहले Login करें");
-    return;
-  }
+    if (userError || !userData.user) {
+      alert("पहले Login करें");
+      return;
+    }
 
-  if (user.id === receiverId) {
-    alert("आप खुद को Interest नहीं भेज सकते");
-    return;
-  }
+    const user = userData.user;
 
-  const { error } = await supabaseClient
-    .from("interests")
-    .insert({
-      sender_id: user.id,
-      receiver_id: receiverId
-    });
+    if (user.id === receiverId) {
+      alert("आप खुद को Interest नहीं भेज सकते");
+      return;
+    }
+
+    const { error: interestError } =
+      await supabaseClient
+        .from("interests")
+        .insert({
+          sender_id: user.id,
+          receiver_id: receiverId
+        });
+
+    if (interestError) {
+      alert("Interest नहीं भेजा गया: " + interestError.message);
+      return;
+    }
+
+    alert("❤️ Interest सफलतापूर्वक भेज दिया गया! ✅");
+
     await supabaseClient
       .from("notifications")
       .insert({
@@ -282,13 +281,13 @@ async function sendInterest(receiverId) {
         type: "interest",
         message: "💗 आपको नया Interest मिला है!"
       });
-  if (error) {
-    alert("Interest नहीं भेजा गया: " + error.message);
-    return;
-  }
 
-  alert("❤️ Interest सफलतापूर्वक भेज दिया गया!");
+  } catch (error) {
+    alert("Interest में समस्या: " + error.message);
+  }
 }
+
+window.sendInterest = sendInterest;
   async function toggleShortlist(profileId) {
 
   const {
