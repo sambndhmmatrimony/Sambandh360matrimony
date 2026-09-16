@@ -238,6 +238,10 @@ document.getElementById("profile").innerHTML = `
     style="margin-top:10px;padding:15px;width:100%;">
     ❤️ Shortlist
   </button>
+  <button onclick="sendContactRequest('${data.id}')"
+style="margin-top:20px;padding:15px;width:100%;background:#9b176d;color:white;border:none;border-radius:10px;font-size:18px;">
+📞 Contact Request भेजें
+</button>
 `;
 }
 
@@ -331,6 +335,59 @@ async function sendInterest(receiverId) {
     alert("❤️ Profile Shortlist हो गई!");
   }
   }
+  }   // toggleShortlist का आखिरी हिस्सा
+
+async function sendContactRequest(profileId) {
+
+  const { data: userData, error: userError } =
+    await supabaseClient.auth.getUser();
+
+  if (userError || !userData.user) {
+    alert("कृपया पहले Login करें।");
+    return;
+  }
+
+  const requesterId = userData.user.id;
+
+  if (requesterId === profileId) {
+    alert("आप अपनी ही Profile को Contact Request नहीं भेज सकते।");
+    return;
+  }
+
+  const { data: existingRequest, error: checkError } =
+    await supabaseClient
+      .from("contact_requests")
+      .select("id")
+      .eq("requester_id", requesterId)
+      .eq("profile_id", profileId)
+      .maybeSingle();
+
+  if (checkError) {
+    alert("Request check नहीं हो सकी: " + checkError.message);
+    return;
+  }
+
+  if (existingRequest) {
+    alert("Contact Request पहले ही भेजी जा चुकी है।");
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("contact_requests")
+      .insert({
+        requester_id: requesterId,
+        profile_id: profileId,
+        status: "pending"
+      });
+
+  if (error) {
+    alert("Contact Request नहीं भेजी गई: " + error.message);
+    return;
+  }
+
+  alert("📞 Contact Request सफलतापूर्वक भेज दी गई! ✅");
+}
 loadProfile();
 </script>
 
