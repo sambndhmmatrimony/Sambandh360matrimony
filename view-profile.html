@@ -172,23 +172,71 @@ async function loadProfile(){
 document.getElementById("profile").innerHTML = `
   <h2 style="color:#ff8ee8">${data.name || "नाम उपलब्ध नहीं"}</h2>
 
-  ${data.photo_url ? `<img src="${data.photo_url}" style="width:180px;height:180px;object-fit:cover;border-radius:50%;display:block;margin:15px auto;">` : ""}
+  ${data.photo_url ? `
+    <img src="${data.photo_url}"
+      style="width:200px;height:200px;object-fit:cover;border-radius:50%;display:block;margin:15px auto;">
+  ` : ""}
 
+  <h3>👤 व्यक्तिगत जानकारी</h3>
   <p>🎂 उम्र: ${data.age || "-"}</p>
   <p>👤 लिंग: ${data.gender || "-"}</p>
+  <p>💍 वैवाहिक स्थिति: ${data.marital_status || "-"}</p>
+  <p>📏 कद: ${data.height || "-"}</p>
+  <p>⚖️ वजन: ${data.weight || "-"}</p>
+  <p>🎨 रंग: ${data.complexion || "-"}</p>
+
+  <h3>🛕 धार्मिक जानकारी</h3>
+  <p>🛕 धर्म: ${data.religion || "-"}</p>
+  <p>जाति: ${data.caste || "-"}</p>
+  <p>🗣️ मातृभाषा: ${data.mother_tongue || "-"}</p>
+
+  <h3>📍 स्थान</h3>
   <p>📍 शहर: ${data.city || "-"}</p>
   <p>🏠 राज्य: ${data.state || "-"}</p>
-  <p>💼 व्यवसाय: ${data.occupation || "-"}</p>
-  <p>📄 परिचय: ${data.bio || "-"}</p>
 
-  <button id="interestBtn" onclick="sendInterest('${data.id}')"
-  style="margin-top:20px;padding:15px;width:100%;background:#a00068;color:white;border:none;border-radius:10px;font-size:18px;">
-  ❤️ Interest भेजें
+  <h3>🎓 शिक्षा और नौकरी</h3>
+  <p>🎓 शिक्षा: ${data.education || "-"}</p>
+  <p>📚 शिक्षा विवरण: ${data.education_details || "-"}</p>
+  <p>🏫 कॉलेज: ${data.college || "-"}</p>
+  <p>💼 व्यवसाय: ${data.occupation || "-"}</p>
+  <p>🏢 कंपनी: ${data.company || "-"}</p>
+  <p>💰 आय: ${data.income || "-"}</p>
+
+  <h3>👨‍👩‍👧‍👦 परिवार की जानकारी</h3>
+  <p>👨 पिता का नाम: ${data.father_name || "-"}</p>
+  <p>👩 माता का नाम: ${data.mother_name || "-"}</p>
+  <p>👫 भाई-बहन: ${data.siblings || "-"}</p>
+  <p>🏡 परिवार का प्रकार: ${data.family_type || "-"}</p>
+  <p>💼 परिवार की स्थिति: ${data.family_status || "-"}</p>
+
+  <h3>🍽️ जीवनशैली</h3>
+  <p>🍽️ भोजन: ${data.food_habit || "-"}</p>
+  <p>🚭 धूम्रपान: ${data.smoking || "-"}</p>
+  <p>🍷 शराब: ${data.drinking || "-"}</p>
+
+  <h3>📝 परिचय</h3>
+  <p>${data.about || "-"}</p>
+  <p>${data.bio || "-"}</p>
+
+  <h3>❤️ जीवनसाथी की पसंद</h3>
+  <p>🎂 उम्र: ${data.partner_age_min || "-"} से ${data.partner_age_max || "-"}</p>
+  <p>📏 कद: ${data.partner_height || "-"}</p>
+  <p>🎓 शिक्षा: ${data.partner_education || "-"}</p>
+  <p>💼 व्यवसाय: ${data.partner_occupation || "-"}</p>
+  <p>📍 शहर: ${data.partner_city || "-"}</p>
+  <p>🛕 धर्म: ${data.partner_religion || "-"}</p>
+  <p>जाति: ${data.partner_caste || "-"}</p>
+
+  <button id="interestBtn"
+    onclick="sendInterest('${data.id}')"
+    style="margin-top:20px;padding:15px;width:100%;background:#a00068;color:white;border:none;border-radius:10px;">
+    ❤️ Interest भेजें
   </button>
+
   <button onclick="toggleShortlist('${data.id}')"
-style="margin-top:10px;padding:15px;width:100%;">
-❤️ Shortlist
-</button>
+    style="margin-top:10px;padding:15px;width:100%;">
+    ❤️ Shortlist
+  </button>
 `;
 }
 
