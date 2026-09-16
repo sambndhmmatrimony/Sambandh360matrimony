@@ -392,7 +392,14 @@ async function sendContactRequest(profileId) {
     alert("Contact Request नहीं भेजी गई: " + error.message);
     return;
   }
-
+await supabaseClient
+  .from("notifications")
+  .insert({
+    user_id: profileId,
+    type: "contact_request",
+    message: "📞 आपको नया Contact Request मिला है!"
+  });
+  
   alert("📞 Contact Request सफलतापूर्वक भेज दी गई! ✅");
 }
 loadProfile();
